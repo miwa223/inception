@@ -1,0 +1,12 @@
+version: '3'
+services:
+  db:
+    image: mariadb
+    build: requirement/mariadb
+  web:
+    image: wordpress
+    build: requirement/wordpress
+  server:
+    image: nginx
+    build: requirement/nginx
+    ports: 
