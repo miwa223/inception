@@ -2,13 +2,14 @@ FROM alpine:3.15
 
 RUN apk update && apk upgrade && apk add --no-cache nginx openssl
 
+RUN mkdir -p /var/www/html
 COPY ./conf/nginx.conf /etc/nginx/nginx.conf
 COPY ./conf/default.conf /etc/nginx/http.d/default.conf
-COPY ./conf/index.html /var/www/localhost/htdocs/index.html
+COPY ./conf/index.html /var/www/html/index.html
 
-RUN chmod +x /etc/nginx/nginx.conf
-RUN chmod +x /etc/nginx/http.d/default.conf
-RUN chmod +x /var/www/localhost/htdocs/index.html
+RUN chmod 777 /etc/nginx/nginx.conf
+RUN chmod 777 /etc/nginx/http.d/default.conf
+RUN chmod 777 /var/www/html/index.html
 
 RUN mkdir -p /etc/ssl/private
 RUN openssl req -x509 -nodes -days 365 \
@@ -18,7 +19,9 @@ RUN openssl req -x509 -nodes -days 365 \
     -keyout /etc/ssl/private/nginx-selfsigned.key \
     -out /etc/ssl/certs/nginx-selfsigned.crt
 
-RUN adduser -D -S -G www-data www-data
+RUN adduser -D -g 'Gwww-data' Gwww-data
+RUN chown -R Gwww-data:Gwww-data /var/lib/nginx
+RUN chown -R Gwww-data:Gwww-data /var/www/html
 
 EXPOSE 443
 
