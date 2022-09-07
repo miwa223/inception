@@ -3,13 +3,12 @@ FROM alpine:3.15
 RUN apk update && apk upgrade && apk add --no-cache nginx openssl
 
 RUN mkdir -p /var/www/html
-COPY ./conf/nginx.conf /etc/nginx/nginx.conf
 COPY ./conf/default.conf /etc/nginx/http.d/default.conf
 COPY ./conf/index.html /var/www/html/index.html
 
-RUN chmod 777 /etc/nginx/nginx.conf
 RUN chmod 777 /etc/nginx/http.d/default.conf
 RUN chmod 777 /var/www/html/index.html
+RUN sed -i -e "s/user nginx;/user Gwww-data;/g" /etc/nginx/nginx.conf
 
 RUN mkdir -p /etc/ssl/private
 RUN openssl req -x509 -nodes -days 365 \
