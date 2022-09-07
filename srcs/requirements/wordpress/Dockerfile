@@ -49,10 +49,8 @@ RUN adduser -D -g 'Gwww-data' Gwww-data \
 
 RUN rm /etc/php7/php-fpm.d/www.conf
 COPY ./www.conf /etc/php7/php-fpm.d/www.conf
-RUN chmod +x /etc/php7/php-fpm.d/www.conf
-
-EXPOSE 9000
-
-# ENTRYPOINT [ "/tmp/config.sh" ]
+RUN chmod 644 /etc/php7/php-fpm.d/www.conf
 
 CMD [ "/tmp/config.sh" ]
+
+EXPOSE 9000
