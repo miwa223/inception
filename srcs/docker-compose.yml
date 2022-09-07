@@ -47,14 +47,14 @@ services:
 networks:
   mynet:
 
-volumes: 
+volumes:
   wp_data:
     driver_opts: 
-      type: none
       device: /home/mmasubuc/data/wordpress
+      type: none
       o: bind
   db_data:
     driver_opts: 
-      type: none
       device: /home/mmasubuc/data/db
+      type: none
       o: bind
