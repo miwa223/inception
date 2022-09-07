@@ -20,15 +20,15 @@ clean: stop
 	sudo docker-compose -f $(SRCS) down --rmi all --volumes --remove-orphans
 
 state:
-	sudo docker-compose -f $(SRCS) ps
+	@sudo docker-compose -f $(SRCS) ps
 
 log-wp:
-	sudo docker logs -f --tail 50 -t wordpress
+	@sudo docker logs -f --tail 50 -t wordpress
 
 log-db:
-	sudo docker logs -f --tail 50 -t mariadb
+	@sudo docker logs -f --tail 50 -t mariadb
 
 log-server:
-	sudo docker logs -f --tail 50 -t nginx
+	@sudo docker logs -f --tail 50 -t nginx
 
 .PHONY: all up stop clean state log-wp log-db log-server
