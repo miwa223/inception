@@ -23,13 +23,4 @@ clean: stop
 state:
 	@docker-compose -f $(SRCS) ps
 
-log-wp:
-	@docker logs -f --tail 50 -t wordpress
-
-log-db:
-	@docker logs -f --tail 50 -t mariadb
-
-log-nginx:
-	@docker logs -f --tail 50 -t nginx
-
-.PHONY: all up stop clean state log-wp log-db log-nginx
+.PHONY: all up stop clean state

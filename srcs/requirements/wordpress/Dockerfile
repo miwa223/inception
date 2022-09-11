@@ -27,13 +27,7 @@ RUN apk add php7 \
             php7-simplexml \
             php7-opcache \
             mariadb-client
-            # fcgi \
 
-# RUN mkdir -p /var/www/html \
-#     && cd /var/www/html \
-#     && wget http://wordpress.org/latest.tar.gz \
-#     && tar -xzvf latest.tar.gz \
-#     && rm latest.tar.gz
 RUN mkdir -p /var/www/html/wordpress
 
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
@@ -44,13 +38,10 @@ COPY ./entrypoint.sh /tmp/entrypoint.sh
 RUN chmod +x /tmp/entrypoint.sh
 
 COPY conf/wp-config.php /var/www/html/wordpress/wp-config.php
-# RUN chmod 644 /var/www/html/wordpress/wp-config.php
 
 RUN adduser -D -g 'Gwww-data' Gwww-data \
     && chown -R Gwww-data:Gwww-data /var/www/html/wordpress/
 
-# RUN rm /etc/php7/php-fpm.d/www.conf
 COPY conf/www.conf /etc/php7/php-fpm.d/www.conf
-# RUN chmod 644 /etc/php7/php-fpm.d/www.conf
 
 CMD [ "/tmp/entrypoint.sh" ]

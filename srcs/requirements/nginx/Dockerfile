@@ -6,8 +6,6 @@ RUN mkdir -p /var/www/html/wordpress
 COPY ./conf/default.conf /etc/nginx/http.d/default.conf
 COPY ./conf/index.html /var/www/html/wordpress/index.html
 
-# RUN chmod 777 /etc/nginx/http.d/default.conf
-# RUN chmod 777 /var/www/html/index.html
 RUN sed -i -e "s/user nginx;/user Gwww-data;/g" /etc/nginx/nginx.conf
 
 RUN mkdir -p /etc/ssl/private
@@ -20,6 +18,5 @@ RUN openssl req -x509 -nodes -days 365 \
 
 RUN adduser -D -g 'Gwww-data' Gwww-data
 RUN chown -R Gwww-data:Gwww-data /var/lib/nginx
-# RUN chown -R Gwww-data:Gwww-data /var/www/html
 
 CMD [ "nginx", "-g", "daemon off;" ]
