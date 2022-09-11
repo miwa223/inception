@@ -1,7 +1,7 @@
 NAME        = inception
 SRCS        = srcs/docker-compose.yml
 HOST_WP_DIR = /home/mmasubuc/data/wordpress
-HOST_DB_DIR = /home/mmasubuc/data/db
+HOST_DB_DIR = /home/mmasubuc/data/mariadb
 
 all: clean up
 
@@ -9,26 +9,27 @@ up:
 	@sudo mkdir -p $(HOST_WP_DIR)
 	@sudo mkdir -p $(HOST_DB_DIR)
 	@sudo sh srcs/requirements/tools/addhost.sh
-	sudo docker-compose -f $(SRCS) up -d --build
+	docker-compose -f $(SRCS) up -d --build
 
 stop:
-	sudo docker-compose -f $(SRCS) down
+	docker-compose -f $(SRCS) down 2>/dev/null
 
 clean: stop
+	@sudo sh srcs/requirements/tools/removehost.sh
 	sudo rm -rf $(HOST_WP_DIR)
 	sudo rm -rf $(HOST_DB_DIR)
-	sudo docker-compose -f $(SRCS) down --rmi all --volumes --remove-orphans
+	docker-compose -f $(SRCS) down --rmi all --volumes --remove-orphans 2>/dev/null
 
 state:
-	@sudo docker-compose -f $(SRCS) ps
+	@docker-compose -f $(SRCS) ps
 
 log-wp:
-	@sudo docker logs -f --tail 50 -t wordpress
+	@docker logs -f --tail 50 -t wordpress
 
 log-db:
-	@sudo docker logs -f --tail 50 -t mariadb
+	@docker logs -f --tail 50 -t mariadb
 
-log-server:
-	@sudo docker logs -f --tail 50 -t nginx
+log-nginx:
+	@docker logs -f --tail 50 -t nginx
 
-.PHONY: all up stop clean state log-wp log-db log-server
+.PHONY: all up stop clean state log-wp log-db log-nginx

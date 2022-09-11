@@ -4,22 +4,24 @@ services:
   wordpress:
     container_name: wordpress
     build: requirements/wordpress/
-    ports:
+    image: wordpress:v1
+    expose:
       - "9000"
     volumes:
       - wp_data:/var/www/html/wordpress
     depends_on:
-      - db
+      - mariadb
     restart: always
     networks:
       - mynet
     env_file:
       - .env
 
-  db:
+  mariadb:
     container_name: mariadb
     build: requirements/mariadb/
-    ports:
+    image: mariadb:v1
+    expose:
       - "3306"
     volumes:
       - db_data:/var/lib/mysql
@@ -29,9 +31,10 @@ services:
     env_file:
       - .env
 
-  server:
+  nginx:
     container_name: nginx
     build: requirements/nginx/
+    image: nginx:v1
     ports:
       - "443:443"
     volumes:
@@ -55,6 +58,6 @@ volumes:
       o: bind
   db_data:
     driver_opts: 
-      device: /home/mmasubuc/data/db
+      device: /home/mmasubuc/data/mariadb
       type: none
       o: bind
