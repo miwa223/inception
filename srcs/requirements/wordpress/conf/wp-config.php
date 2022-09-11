@@ -28,7 +28,7 @@ define( 'DB_USER', 'MYSQL_USER' );
 /** Database password */
 define( 'DB_PASSWORD', 'MYSQL_PASSWORD' );
 
-/** Database hostname */
+/** Database hostname: service name in docker-compose.yml*/ 
 define( 'DB_HOST', 'mariadb' );
 
 /** Database charset to use in creating database tables. */
