@@ -7,8 +7,6 @@ if [ ! -d "/var/lib/mysql/mysql" ]; then
     echo "CREATE DATABASE $MYSQL_NAME;" > /tmp/sql
     echo "CREATE USER $MYSQL_USER@'%' IDENTIFIED BY '$MYSQL_PASSWORD';" >> /tmp/sql
     echo "GRANT ALL ON $MYSQL_NAME.* TO $MYSQL_USER@'%' WITH GRANT OPTION;" >> /tmp/sql
-    # maybe remove later
-    echo "GRANT ALL ON $MYSQL_NAME.* TO $MYSQL_USER@'localhost' WITH GRANT OPTION;" >> /tmp/sql
     echo "ALTER USER root@'localhost' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD';" >> /tmp/sql
     echo "GRANT ALL ON *.* TO root@'localhost' WITH GRANT OPTION;" >> /tmp/sql
     echo "FLUSH PRIVILEGES;" >> /tmp/sql
